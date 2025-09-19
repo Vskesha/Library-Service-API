@@ -9,21 +9,24 @@ class Payment(models.Model):
         PAID = "P", "Paid"
 
     status = models.CharField(
-        max_length=3, choices=Status.choices, default=Status.PENDING
+        max_length=3,
+        choices=Status.choices,
+        default=Status.PENDING,
     )
 
     class Type(models.TextChoices):
-        PAYMENT = (
-            "P",
-            "Payment",
-        )
-        FINE = "F", "Fine"
+        PAYMENT = ("P", "Payment")
+        FINE = ("F", "Fine")
 
     type = models.CharField(
-        max_length=1, choices=Type.choices, default=Type.PAYMENT
+        max_length=1,
+        choices=Type.choices,
+        default=Type.PAYMENT,
     )
     borrowing = models.ForeignKey(
-        Borrowing, on_delete=models.CASCADE, related_name="payments"
+        Borrowing,
+        on_delete=models.CASCADE,
+        related_name="payments",
     )
     session_url = models.URLField()
     session_id = models.CharField(max_length=255)
