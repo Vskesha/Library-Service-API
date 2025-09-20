@@ -14,9 +14,7 @@ class Book(models.Model):
         )
 
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, related_name="books"
-    )
+    author = models.CharField(max_length=255)
     cover = models.CharField(
         max_length=1,
         choices=Cover.choices,
