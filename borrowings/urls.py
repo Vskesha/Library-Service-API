@@ -3,7 +3,7 @@ from rest_framework import routers
 
 from borrowings.views import BorrowingViewSet
 
-app_name = "borrowing"
+app_name = "borrowings"
 
 router = routers.DefaultRouter()
 router.register("borrowings", BorrowingViewSet)

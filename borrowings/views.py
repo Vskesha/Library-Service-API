@@ -1,9 +1,25 @@
-from rest_framework import generics
+from rest_framework import mixins, viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from borrowings.models import Borrowing
-from borrowings.serializers import BorrowingReadSerializer
+from borrowings.serializers import (
+    BorrowingDetailSerializer,
+    BorrowingListSerializer,
+    BorrowingSerializer,
+)
 
 
-class BorrowingViewSet(generics.ListAPIView):
+class BorrowingViewSet(
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+):
     queryset = Borrowing.objects.all().select_related()
-    serializer_class = BorrowingReadSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return BorrowingListSerializer
+        if self.action == "retrieve":
+            return BorrowingDetailSerializer
+        return BorrowingSerializer

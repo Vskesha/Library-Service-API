@@ -1,13 +1,14 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from books.models import Book
 
 
 class Borrowing(models.Model):
-    borrow_date = models.DateTimeField(auto_now_add=True)
-    expected_return_date = models.DateTimeField()
-    actual_return_date = models.DateTimeField(null=True, blank=True)
+    borrow_date = models.DateField(auto_now_add=True)
+    expected_return_date = models.DateField()
+    actual_return_date = models.DateField(null=True, blank=True)
     book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
@@ -24,4 +25,24 @@ class Borrowing(models.Model):
             f"From: {self.borrow_date} "
             f"to {self.expected_return_date} "
             f"returned: {self.actual_return_date}"
+        )
+
+    @staticmethod
+    def validate_expected_return_date(
+        expected_return_date, borrow_date, error_to_raise
+    ):
+
+        if expected_return_date <= borrow_date:
+            raise error_to_raise(
+                {
+                    "expected_return_date": "Expected return date "
+                    "cannot be before borrow date"
+                }
+            )
+
+    def clean(self):
+        Borrowing.validate_expected_return_date(
+            self.expected_return_date,
+            self.borrow_date,
+            ValidationError,
         )
