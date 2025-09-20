@@ -11,7 +11,7 @@ from drf_spectacular.views import (
 
 api_urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
-    path("books/", include("books.urls", namespace="books")),
+    path("", include("books.urls", namespace="books")),
 ]
 
 urlpatterns = [
