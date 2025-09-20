@@ -5,3 +5,5 @@ from books.views import BookViewSet
 router = routers.DefaultRouter()
 
 router.register("books", BookViewSet)
+
+app_name = "books"
