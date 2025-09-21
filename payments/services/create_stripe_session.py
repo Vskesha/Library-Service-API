@@ -32,3 +32,11 @@ def create_stripe_payment_session(borrowing):
 
     except stripe.error.StripeError as e:
         raise Exception(f"Error creating stripe session: {str(e)}")
+
+
+def validate_session(session_id):
+    try:
+        session = stripe.checkout.Session.retrieve(session_id)
+        return session.payment_status == "paid"
+    except stripe.error.StripeError:
+        return False
