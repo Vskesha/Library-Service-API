@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models.constraints import UniqueConstraint
 
 
 class Book(models.Model):
@@ -22,3 +23,6 @@ class Book(models.Model):
     )
     inventory = models.PositiveIntegerField()
     daily_fee = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        UniqueConstraint(fields=["title", "author"], name="unique_book")
