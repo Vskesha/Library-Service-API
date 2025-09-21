@@ -27,9 +27,11 @@ class UserSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password", None)
         instance.email = validated_data.pop("email", instance.email)
         instance.username = validated_data.pop("username", instance.username)
+        instance.first_name = validated_data.pop("first_name", instance.first_name)
+        instance.last_name = validated_data.pop("last_name", instance.last_name)
 
         if password:
-            instance.set_password(password=password)
+            instance.set_password(password)
 
         instance.save()
         return instance
