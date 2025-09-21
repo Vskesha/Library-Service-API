@@ -1,10 +1,7 @@
 import stripe
 from django.conf import settings
 
-from payments.models import Payment
-
 stripe.api_key = settings.STRIPE_SECRET_KEY
-
 
 def create_stripe_payment_session(borrowing):
     book = borrowing.book
@@ -28,16 +25,7 @@ def create_stripe_payment_session(borrowing):
             ],
             mode="payment",
             success_url="http://localhost:8000/payments/success/",
-            cancel_url="http://localhost:8000/payments/cancel/",
-        )
-
-        Payment.objects.create(
-            status="Pending",
-            type="Payment",
-            borrowing=borrowing,
-            session_url=session.url,
-            session_id=session.id,
-            money_to_pay=total_price / 100,
+            cancel_url="http://localhost:8000/payments/cancel/",  # TODO: change
         )
 
         return session
