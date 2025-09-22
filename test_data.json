@@ -1,0 +1,1063 @@
+[
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 1,
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 2,
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 3,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 4,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 4,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 4,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 4,
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 5,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 5,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 5,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 5,
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add history entry",
+        "content_type": 6,
+        "codename": "add_historyentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change history entry",
+        "content_type": 6,
+        "codename": "change_historyentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete history entry",
+        "content_type": 6,
+        "codename": "delete_historyentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view history entry",
+        "content_type": 6,
+        "codename": "view_historyentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add book",
+        "content_type": 7,
+        "codename": "add_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change book",
+        "content_type": 7,
+        "codename": "change_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete book",
+        "content_type": 7,
+        "codename": "delete_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view book",
+        "content_type": 7,
+        "codename": "view_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add borrowing",
+        "content_type": 8,
+        "codename": "add_borrowing"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change borrowing",
+        "content_type": 8,
+        "codename": "change_borrowing"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete borrowing",
+        "content_type": 8,
+        "codename": "delete_borrowing"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view borrowing",
+        "content_type": 8,
+        "codename": "view_borrowing"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add payment",
+        "content_type": 9,
+        "codename": "add_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change payment",
+        "content_type": 9,
+        "codename": "change_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete payment",
+        "content_type": 9,
+        "codename": "delete_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view payment",
+        "content_type": 9,
+        "codename": "view_payment"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 10,
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 10,
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 10,
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view user",
+        "content_type": 10,
+        "codename": "view_user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "debug_toolbar",
+        "model": "historyentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "books",
+        "model": "book"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "borrowings",
+        "model": "borrowing"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "payments",
+        "model": "payment"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "users",
+        "model": "user"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 1,
+    "fields": {
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "cover": "H",
+        "inventory": 5,
+        "daily_fee": "2.50"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 2,
+    "fields": {
+        "title": "To Kill a Mockingbird",
+        "author": "Harper Lee",
+        "cover": "S",
+        "inventory": 3,
+        "daily_fee": "2.00"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 3,
+    "fields": {
+        "title": "1984",
+        "author": "George Orwell",
+        "cover": "H",
+        "inventory": 7,
+        "daily_fee": "3.00"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 4,
+    "fields": {
+        "title": "Pride and Prejudice",
+        "author": "Jane Austen",
+        "cover": "S",
+        "inventory": 4,
+        "daily_fee": "1.75"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 5,
+    "fields": {
+        "title": "The Catcher in the Rye",
+        "author": "J.D. Salinger",
+        "cover": "H",
+        "inventory": 6,
+        "daily_fee": "2.25"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 6,
+    "fields": {
+        "title": "Lord of the Flies",
+        "author": "William Golding",
+        "cover": "S",
+        "inventory": 2,
+        "daily_fee": "1.50"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 7,
+    "fields": {
+        "title": "Brave New World",
+        "author": "Aldous Huxley",
+        "cover": "H",
+        "inventory": 8,
+        "daily_fee": "2.75"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 8,
+    "fields": {
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "cover": "H",
+        "inventory": 10,
+        "daily_fee": "3.50"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 9,
+    "fields": {
+        "title": "Animal Farm",
+        "author": "George Orwell",
+        "cover": "S",
+        "inventory": 5,
+        "daily_fee": "1.25"
+    }
+},
+{
+    "model": "books.book",
+    "pk": 10,
+    "fields": {
+        "title": "Fahrenheit 451",
+        "author": "Ray Bradbury",
+        "cover": "H",
+        "inventory": 4,
+        "daily_fee": "2.00"
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 1,
+    "fields": {
+        "borrow_date": "2024-03-01",
+        "expected_return_date": "2024-03-15",
+        "actual_return_date": "2024-03-14",
+        "book": 1,
+        "user": 1
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 2,
+    "fields": {
+        "borrow_date": "2024-03-02",
+        "expected_return_date": "2024-03-16",
+        "actual_return_date": null,
+        "book": 2,
+        "user": 1
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 3,
+    "fields": {
+        "borrow_date": "2024-03-03",
+        "expected_return_date": "2024-03-17",
+        "actual_return_date": "2024-03-18",
+        "book": 3,
+        "user": 2
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 4,
+    "fields": {
+        "borrow_date": "2024-03-04",
+        "expected_return_date": "2024-03-18",
+        "actual_return_date": null,
+        "book": 4,
+        "user": 2
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 5,
+    "fields": {
+        "borrow_date": "2024-03-05",
+        "expected_return_date": "2024-03-19",
+        "actual_return_date": "2024-03-19",
+        "book": 5,
+        "user": 3
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 6,
+    "fields": {
+        "borrow_date": "2024-03-06",
+        "expected_return_date": "2024-03-20",
+        "actual_return_date": null,
+        "book": 6,
+        "user": 3
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 7,
+    "fields": {
+        "borrow_date": "2024-03-07",
+        "expected_return_date": "2024-03-21",
+        "actual_return_date": "2024-03-20",
+        "book": 7,
+        "user": 1
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 8,
+    "fields": {
+        "borrow_date": "2024-03-08",
+        "expected_return_date": "2024-03-22",
+        "actual_return_date": null,
+        "book": 8,
+        "user": 1
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 9,
+    "fields": {
+        "borrow_date": "2024-03-09",
+        "expected_return_date": "2024-03-23",
+        "actual_return_date": "2024-03-22",
+        "book": 9,
+        "user": 2
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 10,
+    "fields": {
+        "borrow_date": "2024-03-10",
+        "expected_return_date": "2024-03-24",
+        "actual_return_date": null,
+        "book": 10,
+        "user": 2
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 11,
+    "fields": {
+        "borrow_date": "2024-03-11",
+        "expected_return_date": "2024-03-25",
+        "actual_return_date": "2024-03-26",
+        "book": 1,
+        "user": 3
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 12,
+    "fields": {
+        "borrow_date": "2024-03-12",
+        "expected_return_date": "2024-03-26",
+        "actual_return_date": null,
+        "book": 2,
+        "user": 3
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 13,
+    "fields": {
+        "borrow_date": "2024-03-13",
+        "expected_return_date": "2024-03-27",
+        "actual_return_date": "2024-03-27",
+        "book": 3,
+        "user": 1
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 14,
+    "fields": {
+        "borrow_date": "2024-03-14",
+        "expected_return_date": "2024-03-28",
+        "actual_return_date": null,
+        "book": 4,
+        "user": 1
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 15,
+    "fields": {
+        "borrow_date": "2024-03-15",
+        "expected_return_date": "2024-03-29",
+        "actual_return_date": "2024-03-28",
+        "book": 5,
+        "user": 2
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 16,
+    "fields": {
+        "borrow_date": "2024-03-16",
+        "expected_return_date": "2024-03-30",
+        "actual_return_date": null,
+        "book": 6,
+        "user": 2
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 17,
+    "fields": {
+        "borrow_date": "2024-03-17",
+        "expected_return_date": "2024-03-31",
+        "actual_return_date": "2024-03-30",
+        "book": 7,
+        "user": 3
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 18,
+    "fields": {
+        "borrow_date": "2024-03-18",
+        "expected_return_date": "2024-04-01",
+        "actual_return_date": null,
+        "book": 8,
+        "user": 3
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 19,
+    "fields": {
+        "borrow_date": "2024-03-19",
+        "expected_return_date": "2024-04-02",
+        "actual_return_date": "2024-04-01",
+        "book": 9,
+        "user": 1
+    }
+},
+{
+    "model": "borrowings.borrowing",
+    "pk": 20,
+    "fields": {
+        "borrow_date": "2024-03-20",
+        "expected_return_date": "2024-04-03",
+        "actual_return_date": null,
+        "book": 10,
+        "user": 1
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 1,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 1,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_1",
+        "session_id": "cs_test_session_1",
+        "money_to_pay": "35.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 2,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 2,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_2",
+        "session_id": "cs_test_session_2",
+        "money_to_pay": "28.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 3,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 3,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_3",
+        "session_id": "cs_test_session_3",
+        "money_to_pay": "42.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 4,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 4,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_4",
+        "session_id": "cs_test_session_4",
+        "money_to_pay": "24.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 5,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 5,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_5",
+        "session_id": "cs_test_session_5",
+        "money_to_pay": "31.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 6,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 6,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_6",
+        "session_id": "cs_test_session_6",
+        "money_to_pay": "21.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 7,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 7,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_7",
+        "session_id": "cs_test_session_7",
+        "money_to_pay": "38.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 8,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 8,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_8",
+        "session_id": "cs_test_session_8",
+        "money_to_pay": "49.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 9,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 9,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_9",
+        "session_id": "cs_test_session_9",
+        "money_to_pay": "17.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 10,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 10,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_10",
+        "session_id": "cs_test_session_10",
+        "money_to_pay": "28.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 11,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 11,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_11",
+        "session_id": "cs_test_session_11",
+        "money_to_pay": "37.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 12,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 12,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_12",
+        "session_id": "cs_test_session_12",
+        "money_to_pay": "28.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 13,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 13,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_13",
+        "session_id": "cs_test_session_13",
+        "money_to_pay": "42.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 14,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 14,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_14",
+        "session_id": "cs_test_session_14",
+        "money_to_pay": "24.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 15,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 15,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_15",
+        "session_id": "cs_test_session_15",
+        "money_to_pay": "29.25"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 16,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 16,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_16",
+        "session_id": "cs_test_session_16",
+        "money_to_pay": "21.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 17,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 17,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_17",
+        "session_id": "cs_test_session_17",
+        "money_to_pay": "38.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 18,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 18,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_18",
+        "session_id": "cs_test_session_18",
+        "money_to_pay": "49.00"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 19,
+    "fields": {
+        "status": "P",
+        "type": "P",
+        "borrowing": 19,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_19",
+        "session_id": "cs_test_session_19",
+        "money_to_pay": "17.50"
+    }
+},
+{
+    "model": "payments.payment",
+    "pk": 20,
+    "fields": {
+        "status": "PND",
+        "type": "P",
+        "borrowing": 20,
+        "session_url": "https://checkout.stripe.com/pay/cs_test_20",
+        "session_id": "cs_test_session_20",
+        "money_to_pay": "28.00"
+    }
+},
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$jJ5pJI04kXiyontCo48Is5$sLYrAq6yGy21I6acTT5uf83RIMLrw0FWv6/apufYehw=",
+        "last_login": null,
+        "is_superuser": true,
+        "first_name": "John",
+        "last_name": "Doe",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-09-22T06:12:13.787Z",
+        "email": "admin@example.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$T8GG1yq5CCXQ1wcSkU8ca3$i0nTRuY2u2h/90yBb1Q0UsySbc/5mMBpwlP5Z3oNDWU=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "Jane",
+        "last_name": "Smith",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-22T06:12:30.398Z",
+        "email": "user1@example.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$Z9GRgJvHuBNxWyAAdkmOid$DTKlaI9e7RpmNpcm5Jap+LAJwA6ryDWOqWmBcAvzytg=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "Bob",
+        "last_name": "Johnson",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-09-22T06:15:00.085Z",
+        "email": "user2@example.com",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
