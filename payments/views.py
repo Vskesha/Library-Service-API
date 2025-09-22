@@ -2,8 +2,8 @@ from rest_framework import mixins, viewsets
 
 from payments.models import Payment
 from payments.serializers import (
-    PaymentListSerializer,
     PaymentDetailSerializer,
+    PaymentListSerializer,
     PaymentSerializer,
 )
 
@@ -26,7 +26,5 @@ class PaymentViewSet(
         queryset = Payment.objects.select_related("borrowing")
         user = self.request.user
         if not user.is_staff:
-            queryset = Payment.objects.filter(
-                borrowing__user=user
-            )
+            queryset = Payment.objects.filter(borrowing__user=user)
         return queryset
