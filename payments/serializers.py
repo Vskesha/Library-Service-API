@@ -4,10 +4,16 @@ from borrowings.serializers import BorrowingSerializer
 from payments.models import Payment
 
 
+class PaymentSerializer(serializers.ModelSerializer):
+    borrowing = serializers.SlugRelatedField(read_only=True, slug_field="id")
+
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
+
 class PaymentListSerializer(serializers.ModelSerializer):
-    borrowing = serializers.SlugRelatedField(
-        read_only=True, slug_field="id"
-    )
+    borrowing = serializers.SlugRelatedField(read_only=True, slug_field="id")
 
     class Meta:
         model = Payment
@@ -24,6 +30,7 @@ class PaymentDetailSerializer(serializers.ModelSerializer):
     borrowing = BorrowingSerializer(
         read_only=True,
     )
+
     class Meta:
         model = Payment
         fields = (
