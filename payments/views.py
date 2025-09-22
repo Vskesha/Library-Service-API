@@ -23,7 +23,8 @@ class PaymentViewSet(
         return PaymentSerializer
 
     def get_queryset(self):
+        queryset = Payment.objects.select_related("borrowing")
         user = self.request.user
         if not user.is_staff:
-            queryset = Payment.objects.filter(borrowing__user=user)
+            queryset = queryset.filter(borrowing__user=user)
         return queryset
