@@ -34,7 +34,7 @@ class PaymentListSerializer(serializers.ModelSerializer):
         )
 
 
-class PaymentDetailSerializer(serializers.ModelSerializer):
+class PaymentDetailSerializer(PaymentSerializer):
     borrowing = BorrowingSerializer(
         read_only=True,
     )
