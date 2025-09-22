@@ -52,7 +52,9 @@ class AdminApiTest(TestCase):
         book_id = res.data["id"]
         res = self.client.get(book_detail_url(book_id))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data["title"], "The Hobbit, or There and Back Again")
+        self.assertEqual(
+            res.data["title"], "The Hobbit, or There and Back Again"
+        )
 
     def test_unique_book_constraint(self):
         res = self.client.post(
