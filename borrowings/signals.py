@@ -3,22 +3,26 @@ from django.dispatch import receiver
 
 from .models import Borrowing
 from payments.models import Payment
-from payments.services.create_stripe_session import create_stripe_payment_session
+from payments.services.create_stripe_session import StripePaymentService
 
 
 @receiver(post_save, sender=Borrowing)
-def create_payment_for_borrowing(sender, instance, created, **kwargs):
+def create_payment(sender, instance, created, **kwargs):
     if created:
-        stripe_session = create_stripe_payment_session(instance)
+        rent_day = (instance.expected_return - instance.borrow_date).days
+        book_price = instance.book.daily_fee
+        total_count = rent_day * book_price
 
-        daily_rate = instance.book.daily_fee
-        days = (instance.expected_return_date - instance.borrow_date).days
-        amount = daily_rate * days
+        data = {
+            "product_data": {"name": f"Borrowing #{instance.id}"},
+            "unit_amount": total_count,
+        }
+        payment_service = StripePaymentService()
+        session = payment_service.create_payment_session(data)
 
         Payment.objects.create(
             borrowing=instance,
-            money_to_pay=amount,
-            session_url=stripe_session.url,
-            session_id=stripe_session.id,
-            status="Pending"
+            money_to_pay=total_count,
+            session_url=session.url,
+            session_id=session.id,
         )
