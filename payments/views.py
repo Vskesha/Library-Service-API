@@ -13,6 +13,7 @@ class PaymentViewSet(
     mixins.RetrieveModelMixin,
     viewsets.GenericViewSet,
 ):
+    queryset = Payment.objects.select_related("borrowing")
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -22,7 +23,6 @@ class PaymentViewSet(
         return PaymentSerializer
 
     def get_queryset(self):
-        queryset = Payment.objects.select_related("borrowing")
         user = self.request.user
         if not user.is_staff:
             queryset = Payment.objects.filter(borrowing__user=user)
