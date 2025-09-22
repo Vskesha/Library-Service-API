@@ -8,8 +8,10 @@ from books.models import Book
 
 BOOKS_URL = reverse("books:book-list")
 
+
 def book_detail_url(book_id):
     return reverse("books:book-detail", args=[book_id])
+
 
 def sample_book(**params):
     defaults = {
@@ -17,7 +19,7 @@ def sample_book(**params):
         "author": "J. R. R. Tolkien",
         "cover": "H",
         "inventory": 100,
-        "daily_fee": 0.10
+        "daily_fee": 0.10,
     }
     defaults.update(params)
 
@@ -31,8 +33,8 @@ class AdminApiTest(TestCase):
             first_name="Lilichka",
             last_name="Cool",
             email="aboba@mail.com",
-            password='adminpass123',
-            is_staff=True
+            password="adminpass123",
+            is_staff=True,
         )
         self.client.force_authenticate(user=self.user)
         self.book = sample_book()
@@ -49,11 +51,10 @@ class AdminApiTest(TestCase):
                 "author": "J. R. R. Tolkien",
                 "cover": "H",
                 "inventory": 100,
-                "daily_fee": 0.10
-            }
+                "daily_fee": 0.10,
+            },
         )
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-
 
     def test_unique_book_constraint(self):
         res = self.client.post(
@@ -63,8 +64,8 @@ class AdminApiTest(TestCase):
                 "author": "J. R. R. Tolkien",
                 "cover": "S",
                 "inventory": 50,
-                "daily_fee": 0.20
-            }
+                "daily_fee": 0.20,
+            },
         )
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         res = self.client.post(
@@ -74,11 +75,10 @@ class AdminApiTest(TestCase):
                 "author": "J. R. R. Tolkien",
                 "cover": "S",
                 "inventory": 50,
-                "daily_fee": 0.20
-            }
+                "daily_fee": 0.20,
+            },
         )
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
 
     def test_delete_book_allowed(self):
         url = book_detail_url(self.book.id)
@@ -92,12 +92,13 @@ class AdminApiTest(TestCase):
             "author": "J. R. R. Tolkien",
             "cover": "H",
             "inventory": 100,
-            "daily_fee": 0.10
+            "daily_fee": 0.10,
         }
         res = self.client.put(url, payload, format="json")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.data["title"],
-                         "The Hobbit, or There and Back Again")
+        self.assertEqual(
+            res.data["title"], "The Hobbit, or There and Back Again"
+        )
 
 
 class UnauthenticatedApiTest(TestCase):
@@ -115,7 +116,7 @@ class UnauthenticatedApiTest(TestCase):
             "author": "J. R. R. Tolkien",
             "cover": "H",
             "inventory": 100,
-            "daily_fee": 0.10
+            "daily_fee": 0.10,
         }
         res = self.client.post(BOOKS_URL, payload, format="json")
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
