@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from borrowings.models import Borrowing
 from borrowings.serializers import (
+    BorrowingCreateSerializer,
     BorrowingDetailSerializer,
     BorrowingListSerializer,
     BorrowingSerializer,
@@ -12,6 +13,7 @@ from borrowings.serializers import (
 class BorrowingViewSet(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
     queryset = Borrowing.objects.all().select_related()
@@ -22,4 +24,9 @@ class BorrowingViewSet(
             return BorrowingListSerializer
         if self.action == "retrieve":
             return BorrowingDetailSerializer
+        if self.action == "create":
+            return BorrowingCreateSerializer
         return BorrowingSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
