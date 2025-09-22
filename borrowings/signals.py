@@ -1,15 +1,15 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import Borrowing
 from payments.models import Payment
 from payments.services.create_stripe_session import StripePaymentService
+from .models import Borrowing
 
 
 @receiver(post_save, sender=Borrowing)
 def create_payment(sender, instance, created, **kwargs):
     if created:
-        rent_day = (instance.expected_return - instance.borrow_date).days
+        rent_day = (instance.expected_return_date - instance.borrow_date).days
         book_price = instance.book.daily_fee
         total_count = rent_day * book_price
 

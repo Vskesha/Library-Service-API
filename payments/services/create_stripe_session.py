@@ -1,9 +1,10 @@
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 
 import stripe
 from django.conf import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 class BasePaymentService(ABC):
     @abstractmethod
@@ -18,8 +19,9 @@ class BasePaymentService(ABC):
     def mark_session_as_expired(self, session_id):
         pass
 
+
 class StripePaymentService(BasePaymentService):
-    def create_stripe_payment_session(self, data: dict):
+    def create_payment_session(self, data: dict):
         try:
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -43,7 +45,6 @@ class StripePaymentService(BasePaymentService):
 
         except stripe.error.StripeError as e:
             raise Exception(f"Error creating stripe session: {str(e)}")
-
 
     def is_paid(self, session_id):
         try:
