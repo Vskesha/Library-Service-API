@@ -17,8 +17,6 @@ ALLOWED_HOSTS = os.environ.get(
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-IN_DOCKER = os.environ.get("IN_DOCKER", "False").lower() == "true"
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",

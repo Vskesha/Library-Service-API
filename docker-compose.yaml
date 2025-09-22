@@ -10,8 +10,7 @@ services:
       - "8000:8000"
     command: >
       sh -c "python manage.py wait_for_db &&
-             python manage.py makemigrations
-             python manage.py migrate && 
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./:/app
@@ -29,6 +28,68 @@ services:
     volumes:
       - my_db:/var/lib/postgresql/data
 
+  redis:
+    image: redis:8.0-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_drf:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  celery:
+    build:
+      context: .
+    container_name: celery
+    restart: always
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - ./:/app
+    depends_on:
+      - app
+      - redis
+      - db
+    env_file:
+      - .env
+
+  celery-beat:
+    build:
+      context: .
+    container_name: celery-beat
+    command: celery -A config beat --loglevel=info
+    volumes:
+      - ./:/app
+    depends_on:
+      - celery
+      - db
+      - redis
+    env_file:
+      - .env
+
+  celery-flower:
+    build:
+      context: .
+    container_name: celery-flower
+    restart: always
+    ports:
+      - "5555:5555"
+    command: celery -A config --broker=${CELERY_BROKER_URL} flower --port=5555
+    volumes:
+      - ./:/app
+    depends_on:
+      - app
+      - redis
+      - celery
+    environment:
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+
 volumes:
   my_db:
   my_media:
+  redis_data_drf:
+  celery-schedule:
