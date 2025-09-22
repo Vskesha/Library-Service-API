@@ -29,13 +29,7 @@ def sample_book(**params):
 class AdminApiTest(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = get_user_model().objects.create_user(
-            first_name="Lilichka",
-            last_name="Cool",
-            email="aboba@mail.com",
-            password="adminpass123",
-            is_staff=True,
-        )
+        self.user = get_user_model()
         self.client.force_authenticate(user=self.user)
         self.book = sample_book()
 
@@ -47,7 +41,7 @@ class AdminApiTest(TestCase):
         res = self.client.post(
             BOOKS_URL,
             data={
-                "title": "he Hobbit, or There and Back Again",
+                "title": "The Hobbit, or There and Back Again",
                 "author": "J. R. R. Tolkien",
                 "cover": "H",
                 "inventory": 100,
@@ -55,6 +49,10 @@ class AdminApiTest(TestCase):
             },
         )
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        book_id = res.data["id"]
+        res = self.client.get(book_detail_url(book_id))
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data["title"], "The Hobbit, or There and Back Again")
 
     def test_unique_book_constraint(self):
         res = self.client.post(
