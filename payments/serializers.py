@@ -21,7 +21,7 @@ class PaymentListSerializer(serializers.ModelSerializer):
             "id",
             "status",
             "type",
-            "borrowing_id",
+            "borrowing",
             "money_to_pay",
         )
 
