@@ -40,9 +40,29 @@ class Borrowing(models.Model):
                 }
             )
 
-    def clean(self):
+    @staticmethod
+    def validate_actual_return_date(
+        actual_return_date, borrow_date, error_to_raise
+    ):
+
+        if actual_return_date <= borrow_date:
+            raise error_to_raise(
+                {
+                    "actual_return_date": "Actual return date "
+                    "cannot be before borrow date"
+                }
+            )
+
+    def clean_expected_return_date(self):
         Borrowing.validate_expected_return_date(
             self.expected_return_date,
+            self.borrow_date,
+            ValidationError,
+        )
+
+    def clean_actual_return_date(self):
+        Borrowing.validate_actual_return_date(
+            self.actual_return_date,
             self.borrow_date,
             ValidationError,
         )
