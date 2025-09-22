@@ -13,7 +13,6 @@ class PaymentViewSet(
     mixins.RetrieveModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = Payment.objects.select_related("borrowing")
 
     def get_serializer_class(self):
         if self.action == "list":
