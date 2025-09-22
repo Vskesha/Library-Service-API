@@ -54,31 +54,39 @@ class AdminApiTest(TestCase):
         )
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-    # TODO uncomment this when unique constraint branch approved
-    # def test_unique_book_constraint(self):
-    #     sample_book()
-    #     res = self.client.post(
-    #         BOOKS_URL,
-    #         data={
-    #             "title": "Lord of the Rings",
-    #             "author": "J. R. R. Tolkien",
-    #             "cover": "S",
-    #             "inventory": 50,
-    #             "daily_fee": 0.20
-    #         }
-    #     )
-    #     self.assertEqual(res.status_code, status.HTTP_409_CONFLICT)
+
+    def test_unique_book_constraint(self):
+        res = self.client.post(
+            BOOKS_URL,
+            data={
+                "title": "The Hobbit",
+                "author": "J. R. R. Tolkien",
+                "cover": "S",
+                "inventory": 50,
+                "daily_fee": 0.20
+            }
+        )
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        res = self.client.post(
+            BOOKS_URL,
+            data={
+                "title": "The Hobbit",
+                "author": "J. R. R. Tolkien",
+                "cover": "S",
+                "inventory": 50,
+                "daily_fee": 0.20
+            }
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
 
     def test_delete_book_allowed(self):
-        book = sample_book()
-        url = book_detail_url(book.id)
+        url = book_detail_url(self.book.id)
         res = self.client.delete(url)
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
 
-    def test_put_show_session_admin(self):
-        book = sample_book()
-        url = book_detail_url(book.id)
+    def test_put_book_admin(self):
+        url = book_detail_url(self.book.id)
         payload = {
             "title": "The Hobbit, or There and Back Again",
             "author": "J. R. R. Tolkien",
