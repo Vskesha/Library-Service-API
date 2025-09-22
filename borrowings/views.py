@@ -1,6 +1,8 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 
+from borrowings.filters import BorrowingFilter
 from borrowings.models import Borrowing
 from borrowings.serializers import (
     BorrowingCreateSerializer,
@@ -18,6 +20,8 @@ class BorrowingViewSet(
 ):
     queryset = Borrowing.objects.all().select_related()
     permission_classes = (IsAuthenticated,)
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = BorrowingFilter
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -30,3 +34,12 @@ class BorrowingViewSet(
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+
+        if not user.is_staff:
+            queryset = queryset.filter(user=user)
+
+        return queryset
