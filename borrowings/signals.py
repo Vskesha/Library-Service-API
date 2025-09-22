@@ -31,7 +31,6 @@ def create_payment(sender, instance, created, **kwargs):
         )
 
 
-
 @receiver(post_save, sender=Borrowing)
 def borrowing_created(sender, instance, created, **kwargs):
     if created:
