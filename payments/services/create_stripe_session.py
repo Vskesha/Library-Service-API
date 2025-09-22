@@ -36,16 +36,8 @@ class StripePaymentService(BasePaymentService):
                     }
                 ],
                 mode="payment",
-                success_url=(
-                    "http://127.0.0.1:8000/"
-                    "api/payments/success/"
-                    "?session_id={CHECKOUT_SESSION_ID}"
-                ),
-                cancel_url=(
-                    "http://127.0.0.1:8000/"
-                    "api/payments/cancel/"
-                    "?session_id={CHECKOUT_SESSION_ID}"
-                ),
+                success_url="https://example.com/success",
+                cancel_url="https://example.com/cancel",
             )
             return session
 
