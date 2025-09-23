@@ -21,7 +21,10 @@ def create_payment(sender, instance, created, **kwargs):
         total_count = rent_day * book_price
 
         data = {
-            "product_data": {"name": f"Borrowing #{instance.id}"},
+            "product_data": {
+                "name": f"Borrowing {instance.book.title} "
+                f"({instance.book.author}) for {rent_day} day(s)"
+            },
             "unit_amount": total_count,
         }
         payment_service = StripePaymentService()
@@ -69,7 +72,8 @@ def create_fine_payment_on_overdue(sender, instance, created, **kwargs):
 
             data = {
                 "product_data": {
-                    "name": f"Overdue for {book.title} ({book.author}"
+                    "name": f"Overdue borrowing {book.title} "
+                    f"({book.author} for {overdue_days} day(s)"
                 },
                 "unit_amount": fine_amount,
             }
