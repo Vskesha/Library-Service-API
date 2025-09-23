@@ -1,5 +1,5 @@
-from django.utils import timezone
 from django.conf import settings
+from django.utils import timezone
 
 from borrowings.models import Borrowing
 from notifications.services.telegram_bot_service import TelegramBotService
@@ -27,7 +27,7 @@ class BorrowingNotificationService(TelegramBotService):
     def check_overdue_borrowings(self) -> None:
         overdue_borrowings = Borrowing.objects.filter(
             actual_return_date__isnull=True,
-            expected_return_date__lte=timezone.localdate(),
+            expected_return_date__lt=timezone.localdate(),
         ).select_related("book", "user")
 
         if overdue_borrowings.exists():
@@ -35,10 +35,8 @@ class BorrowingNotificationService(TelegramBotService):
 
             for borrowing in overdue_borrowings:
                 borrowings_by_user.setdefault(
-                    borrowing.user.email, []
-                ).append(
-                    borrowing
-                )
+                    borrowing.user.full_name, []
+                ).append(borrowing)
 
             text_parts = []
             for user, borrowings in borrowings_by_user.items():
@@ -54,8 +52,8 @@ class BorrowingNotificationService(TelegramBotService):
                 )
                 text_parts.append(user_text + borrowings_text)
 
-            text = "\n".join(text_parts)
+            text = "Borrowings Info 📚\n" + "\n\n".join(text_parts)
         else:
-            text = "No borrowings overdue today!"
+            text = "No borrowings overdue today! ✅"
 
         self.send_notification(settings.TELEGRAM_ADMIN_CHAT_ID, text=text)
