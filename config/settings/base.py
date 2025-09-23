@@ -184,3 +184,4 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "UTC"
 
 BASE_URL = "http://127.0.0.1:8000"
+HOST_URL = os.environ.get("HOST_URL", "http://127.0.0.1:8000")
