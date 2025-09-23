@@ -1,11 +1,13 @@
 from rest_framework import serializers
 
-from borrowings.serializers import BorrowingSerializer
+from borrowings.serializers import BorrowingListSerializer
 from payments.models import Payment
 
 
 class PaymentSerializer(serializers.ModelSerializer):
-    borrowing = serializers.SlugRelatedField(read_only=True, slug_field="id")
+    borrowing = BorrowingListSerializer(
+        read_only=True,
+    )
 
     class Meta:
         model = Payment
@@ -35,6 +37,11 @@ class PaymentListSerializer(serializers.ModelSerializer):
 
 
 class PaymentDetailSerializer(PaymentSerializer):
-    borrowing = BorrowingSerializer(
-        read_only=True,
-    )
+    """
+    Extends PaymentSerializer for detailed views.
+
+    Inherits from PaymentSerializer and currently shares the same fields.
+    Defined separately to support future enhancements
+    """
+
+    pass
