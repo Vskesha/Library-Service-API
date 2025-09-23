@@ -12,12 +12,12 @@ class BorrowingNotificationService(TelegramBotService):
     @staticmethod
     def _format_borrowing_notification(borrowing: Borrowing) -> str:
         return (
-            f" New Borrowing Created\n"
-            f"User: {borrowing.user.full_name}\n"
-            f"Book: {borrowing.book.title} by {borrowing.book.author}\n"
-            f"Borrow date: {borrowing.borrow_date}\n"
-            f"Expected return: {borrowing.expected_return_date}\n"
-            f"Actual return: {borrowing.actual_return_date or '—'}"
+            f"New Borrowing Created\n"
+            f"👤 User: {borrowing.user.full_name}\n"
+            f"📚 Book: {borrowing.book.title} by {borrowing.book.author}\n"
+            f"📅 Borrow date: {borrowing.borrow_date}\n"
+            f"📅 Expected return: {borrowing.expected_return_date}\n"
+            f"📅 Actual return: {borrowing.actual_return_date or '—'}"
         )
 
     def send_borrowing_notification(self, borrowing: Borrowing) -> None:
