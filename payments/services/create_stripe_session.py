@@ -9,7 +9,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class BasePaymentService(ABC):
     @abstractmethod
-    def create_payment_session(self, data: dict, request):
+    def create_payment_session(self, data: dict):
         pass
 
     @abstractmethod
@@ -22,8 +22,10 @@ class BasePaymentService(ABC):
 
 
 class StripePaymentService(BasePaymentService):
-    def create_payment_session(self, data: dict, request):
+    def create_payment_session(self, data: dict):
         try:
+            base_url = getattr(settings, 'BASE_URL', 'http://127.0.0.1:8000')
+
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
                 line_items=[
@@ -39,12 +41,8 @@ class StripePaymentService(BasePaymentService):
                     }
                 ],
                 mode="payment",
-                success_url=request.build_absolute_uri(
-                    reverse("payment-success")
-                ) + "?session_id={CHECKOUT_SESSION_ID}",
-                cancel_url = request.build_absolute_uri(
-                    reverse("payment-cancel")
-                ) + "?session_id={CHECKOUT_SESSION_ID}",
+                success_url=f"{base_url}{reverse('payments:payment-success')}?session_id={{CHECKOUT_SESSION_ID}}",
+                cancel_url=f"{base_url}{reverse('payments:payment-cancel')}?session_id={{CHECKOUT_SESSION_ID}}",
             )
             return session
 

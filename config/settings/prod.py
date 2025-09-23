@@ -24,3 +24,5 @@ DATABASES = {
         "PORT": os.environ["POSTGRES_PORT"],
     }
 }
+
+BASE_URL = os.environ.get("BASE_URL", "https://ourdomen.com")

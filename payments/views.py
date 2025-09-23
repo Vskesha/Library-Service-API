@@ -39,7 +39,7 @@ class PaymentViewSet(
             queryset = queryset.filter(borrowing__user=user)
         return queryset
 
-    @action(detail=False, methods=["get"], url_path="success", url_name="success")
+    @action(detail=False, methods=["get"], url_path="success")
     def success(self, request: Request):
         session_id = request.query_params.get("session_id")
         if not session_id:
@@ -69,7 +69,7 @@ class PaymentViewSet(
 
         return Response({"message": "Payment is not confirmed yet."})
 
-    @action(detail=False, methods=["get"], url_path="cancel", url_name="cancel")
+    @action(detail=False, methods=["get"], url_path="cancel")
     def cancel(self, request: Request):
         session_id = request.query_params.get("session_id")
         if not session_id:
