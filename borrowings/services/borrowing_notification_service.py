@@ -46,13 +46,12 @@ class BorrowingNotificationService(TelegramBotService):
                     f"borrowing{'s' if count_borrowings > 1 else ''}:\n"
                 )
                 borrowings_text = "\n".join(
-                    f"'{borrowing.book.title}' "
-                    f"{borrowing.borrow_date}-{borrowing.expected_return_date}"
+                    f"📕 {borrowing.book.title} (Return date: {borrowing.expected_return_date})"
                     for borrowing in borrowings
                 )
                 text_parts.append(user_text + borrowings_text)
 
-            text = "Borrowings Info 📚\n" + "\n\n".join(text_parts)
+            text = "Borrowings Info 📚\n\n" + "\n\n".join(text_parts)
         else:
             text = "No borrowings overdue today! ✅"
 
