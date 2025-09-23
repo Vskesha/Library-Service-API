@@ -5,9 +5,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
-from stripe import StripeError
-
 from rest_framework.test import APIClient
+from stripe import StripeError
 
 from books.models import Book
 from borrowings.models import Borrowing
@@ -20,6 +19,7 @@ PAYMENTS_URL = reverse("payments:payment-list")
 def payment_detail_url(payment_id):
     return reverse("payments:payment-detail", args=[payment_id])
 
+
 def sample_user(**params):
     defaults = {
         "password": "testpass123",
@@ -31,6 +31,7 @@ def sample_user(**params):
         defaults["email"] = "user@example.com"
 
     return get_user_model().objects.create(**defaults)
+
 
 def sample_book(**params):
     defaults = {
@@ -104,8 +105,12 @@ class StaffPaymentApiTest(TestCase):
         self.client.force_authenticate(user=self.staff_user)
         self.book1 = sample_book(title="Lord of the Rings 2")
         self.book2 = sample_book(title="Lord of the Rings 3")
-        self.borrowing1 = sample_borrowing(user=sample_user(email="user1@example.com"), book=self.book1)
-        self.borrowing2 = sample_borrowing(user=sample_user(email="user2@example.com"), book=self.book2)
+        self.borrowing1 = sample_borrowing(
+            user=sample_user(email="user1@example.com"), book=self.book1
+        )
+        self.borrowing2 = sample_borrowing(
+            user=sample_user(email="user2@example.com"), book=self.book2
+        )
 
     def test_staff_sees_all_payments(self):
         res = self.client.get(PAYMENTS_URL)
