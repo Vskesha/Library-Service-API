@@ -1,27 +1,17 @@
-from unittest.mock import patch
-
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 from django.utils import timezone
 from rest_framework.test import APIClient
 
 from books.models import Book
 from borrowings.models import Borrowing
+from payments.tests.tests_classes import NoMessagesTestCase
 
 User = get_user_model()
 
 
-class BorrowingViewSetTests(TestCase):
+class BorrowingViewSetTests(NoMessagesTestCase):
 
     def setUp(self):
-        """Telegram signals are blocked to avoid requests for tests"""
-        patcher = patch(
-            "notifications.services.telegram_bot_service.TelegramBotService.send_notification"
-        )
-        self.mock_telegram = patcher.start()
-        self.mock_telegram.return_value = True
-        self.addCleanup(patcher.stop)
-
         self.admin = User.objects.create_user(
             email="admin@test.com", password="pass", is_staff=True
         )
