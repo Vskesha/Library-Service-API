@@ -1,12 +1,11 @@
 import stripe
 from celery import shared_task
+from django.utils import timezone
+
 from payments.services.payment_notification_service import (
     PaymentNotificationService,
 )
-from django.utils import timezone
-
 from .models import Payment
-
 
 
 @shared_task
