@@ -1,7 +1,7 @@
 from django.db import transaction
 from django.db.models import F
 from django.utils import timezone
-from rest_framework import mixins, viewsets, status
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.request import Request
@@ -65,7 +65,9 @@ class PaymentViewSet(
         if stripe_service.is_paid(session_id):
             payment.status = Payment.Status.PAID
             payment.save(update_fields=["status"])
-            return Response({"message": "Your payment was processed successfully."})
+            return Response(
+                {"message": "Your payment was processed successfully."}
+            )
 
         return Response({"message": "Payment is not confirmed yet."})
 
@@ -101,5 +103,7 @@ class PaymentViewSet(
             )
 
         return Response(
-            {"message": "Payment was cancelled. You can retry within 24 hours."}
+            {
+                "message": "Payment was cancelled. You can retry within 24 hours."
+            }
         )

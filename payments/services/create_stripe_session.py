@@ -24,7 +24,7 @@ class BasePaymentService(ABC):
 class StripePaymentService(BasePaymentService):
     def create_payment_session(self, data: dict):
         try:
-            base_url = getattr(settings, 'BASE_URL', 'http://127.0.0.1:8000')
+            base_url = getattr(settings, "BASE_URL", "http://127.0.0.1:8000")
 
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
