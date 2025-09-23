@@ -104,6 +104,7 @@ class PaymentViewSet(
 
         return Response(
             {
-                "message": "Payment was cancelled. You can retry within 24 hours."
+                "message": "Payment was cancelled. "
+                           "You can retry within 24 hours."
             }
         )
