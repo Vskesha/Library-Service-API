@@ -48,6 +48,7 @@ class BorrowingListSerializer(serializers.ModelSerializer):
             "actual_return_date",
             "book",
             "user",
+            "payments",
         )
 
 
