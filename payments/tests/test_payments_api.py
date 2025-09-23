@@ -1,11 +1,13 @@
 from datetime import date
+from unittest.mock import MagicMock, patch
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from unittest.mock import patch, MagicMock
-
 from django.urls import reverse
+from rest_framework import status
 from stripe import StripeError
+
+from rest_framework.test import APIClient
 
 from books.models import Book
 from borrowings.models import Borrowing
@@ -15,20 +17,20 @@ from payments.services.create_stripe_session import StripePaymentService
 PAYMENTS_URL = reverse("payments:payment-list")
 
 
+def payment_detail_url(payment_id):
+    return reverse("payments:payment-detail", args=[payment_id])
+
 def sample_user(**params):
     defaults = {
-        "email": "user@example.com",
         "password": "testpass123",
         "first_name": "Iryna",
         "last_name": "Petrivna",
     }
     defaults.update(params)
-    return get_user_model().objects.create_user(**defaults)
+    if "email" not in defaults:
+        defaults["email"] = "user@example.com"
 
-
-def payment_detail_url(payment_id):
-    return reverse("payments:payment-detail", args=[payment_id])
-
+    return get_user_model().objects.create(**defaults)
 
 def sample_book(**params):
     defaults = {
@@ -46,28 +48,84 @@ def sample_book(**params):
 def sample_borrowing(**params):
     defaults = {
         "expected_return_date": date(2100, 12, 12),
-        "book": sample_book(),
-        "user": sample_user(),
     }
+    defaults.update(params)
+    if "user" not in defaults:
+        defaults["user"] = sample_user()
+    if "book" not in defaults:
+        defaults["book"] = sample_book()
 
     return Borrowing.objects.create(**defaults)
 
 
 def sample_payment(**params):
     defaults = {
-        "status": "Paid",
-        "type": "Payment",
-        "borrowing": sample_borrowing(),
-        "session_url": "pupupu.com",
+        "status": "P",
+        "type": "P",
+        "session_url": "https://stripe.com/session",
         "session_id": "sess_123",
         "money_to_pay": 30.50,
     }
     defaults.update(params)
+    if "borrowing" not in defaults:
+        defaults["borrowing"] = sample_borrowing()
 
     return Payment.objects.create(**defaults)
 
 
+class AuthenticatedPaymentApiTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = sample_user()
+        self.client.force_authenticate(user=self.user)
+        self.book = sample_book(title="Lord of the Rings 1")
+        self.borrowing = sample_borrowing(book=self.book, user=self.user)
+        self.payment = Payment.objects.get(borrowing=self.borrowing)
 
+    def test_list_payments_for_user_only(self):
+        res = self.client.get(PAYMENTS_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 1)
+        self.assertEqual(res.data[0]["borrowing"], self.borrowing.id)
+
+    def test_retrieve_users_payment(self):
+        url = payment_detail_url(self.payment.id)
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data["id"], self.payment.id)
+
+
+class StaffPaymentApiTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.staff_user = sample_user(
+            email="admin@example.com", password="adminpass123", is_staff=True
+        )
+        self.client.force_authenticate(user=self.staff_user)
+        self.book1 = sample_book(title="Lord of the Rings 2")
+        self.book2 = sample_book(title="Lord of the Rings 3")
+        self.borrowing1 = sample_borrowing(user=sample_user(email="user1@example.com"), book=self.book1)
+        self.borrowing2 = sample_borrowing(user=sample_user(email="user2@example.com"), book=self.book2)
+
+    def test_staff_sees_all_payments(self):
+        res = self.client.get(PAYMENTS_URL)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 2)
+
+
+class UnauthenticatedPaymentApiTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.payment = sample_payment()
+
+    def test_auth_required_for_payment_list(self):
+        res = self.client.get(PAYMENTS_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_auth_required_for_payment_detail(self):
+        url = payment_detail_url(self.payment.id)
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class StripePaymentServiceTests(TestCase):
@@ -96,8 +154,10 @@ class StripePaymentServiceTests(TestCase):
             self.assertEqual(result, mock_session)
 
     def test_stripe_error_raised(self):
-        with patch("stripe.checkout.Session.create",
-                   side_effect=StripeError("Stripe is down")) as mock_create:
+        with patch(
+            "stripe.checkout.Session.create",
+            side_effect=StripeError("Stripe is down"),
+        ) as mock_create:
             mock_session = MagicMock()
             mock_session.id = "sess_123"
             mock_create.return_value = mock_session
@@ -105,8 +165,10 @@ class StripePaymentServiceTests(TestCase):
             with self.assertRaises(Exception) as context:
                 self.stripe_service.create_payment_session(data)
 
-            self.assertIn("Error creating stripe session: Stripe is down",
-                          str(context.exception))
+            self.assertIn(
+                "Error creating stripe session: Stripe is down",
+                str(context.exception),
+            )
 
     def test_is_paid_true(self):
         with patch("stripe.checkout.Session.retrieve") as mock_retrieve:
@@ -118,7 +180,9 @@ class StripePaymentServiceTests(TestCase):
             self.assertTrue(result)
 
     def test_is_paid_stripe_error_exception(self):
-        with patch("stripe.checkout.Session.retrieve",
-                   side_effect=StripeError("Stripe is down")):
+        with patch(
+            "stripe.checkout.Session.retrieve",
+            side_effect=StripeError("Stripe is down"),
+        ):
             result = self.stripe_service.is_paid("sess_123")
             self.assertFalse(result)
