@@ -7,5 +7,4 @@ def check_overdue_borrowings_task():
         BorrowingNotificationService,
     )
 
-    borrowings_notification = BorrowingNotificationService()
-    borrowings_notification.check_overdue_borrowings()
+    BorrowingNotificationService().check_overdue_borrowings()
