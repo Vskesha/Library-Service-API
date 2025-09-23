@@ -11,7 +11,7 @@ class PaymentNotificationService(TelegramBotService):
     @staticmethod
     def _format_payment_notification(payment: Payment) -> str:
         return (
-            f"💳 <b>Payment Successful</b>\n\n"
+            f"💳 <b>Payment Successful</b>\n"
             f"👤 User: {payment.borrowing.user.full_name}\n"
             f"📚 Book: {payment.borrowing.book.title}\n"
             f"💰 Amount: {payment.money_to_pay} UAH\n"
