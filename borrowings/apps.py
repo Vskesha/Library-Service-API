@@ -5,5 +5,5 @@ class BorrowingsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "borrowings"
 
-    def ready(self):
+    def ready(self) -> None:
         import borrowings.signals
