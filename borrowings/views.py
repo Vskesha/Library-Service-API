@@ -24,7 +24,11 @@ class BorrowingViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
-    queryset = Borrowing.objects.all().select_related()
+    queryset = (
+        Borrowing.objects.all()
+        .select_related("book", "user")
+        .prefetch_related("payments")
+    )
     permission_classes = (IsAuthenticated,)
     filter_backends = [DjangoFilterBackend]
     filterset_class = BorrowingFilter
@@ -75,8 +79,8 @@ class BorrowingViewSet(
 
         if not request.user.is_staff and borrowing.user != request.user:
             return Response(
-                {"error": "You can return only your own borrowings."},
-                status=status.HTTP_403_FORBIDDEN,
+                {"detail": "Not found."},
+                status=status.HTTP_404_NOT_FOUND,
             )
 
         with transaction.atomic():
