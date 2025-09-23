@@ -7,5 +7,5 @@ from payments.tasks import send_payment_notification_task
 
 @receiver(post_save, sender=Payment)
 def payment_completed(sender, instance, created, **kwargs):
-    if instance.status == Payment.Status.PAID:
+    if not created and instance.status == Payment.Status.PAID:
         send_payment_notification_task.delay(instance.id)
