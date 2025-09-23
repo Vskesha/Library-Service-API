@@ -21,3 +21,12 @@ def setup_periodic_tasks(sender: Celery, **kwargs):
         check_overdue_borrowings_task.s(),
         name="Daily check of overdue borrowings",
     )
+
+
+app.conf.beat_schedule = {
+    "check-expired-stripe-sessions": {
+        "task": "payments.tasks.check_expired_stripe_sessions",
+        "schedule": 60.0,
+    },
+}
+app.conf.timezone = "UTC"

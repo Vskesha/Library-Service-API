@@ -1,7 +1,7 @@
 from django.db import transaction
 from django.db.models import F
 from django.utils import timezone
-from rest_framework import mixins, status, viewsets
+from rest_framework import generics, mixins, permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -14,6 +14,7 @@ from payments.models import Payment
 from payments.serializers import (
     PaymentDetailSerializer,
     PaymentListSerializer,
+    PaymentRenewSerializer,
     PaymentSerializer,
 )
 from payments.services.create_stripe_session import StripePaymentService
@@ -110,3 +111,14 @@ class PaymentViewSet(
                 "You can retry within 24 hours."
             }
         )
+
+
+class PaymentRenewView(generics.UpdateAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentRenewSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Payment.objects.all()
+        return Payment.objects.filter(borrowing__user=self.request.user)
