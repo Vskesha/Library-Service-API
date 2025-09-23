@@ -213,14 +213,14 @@ class BorrowingSignalsTest(NoMessagesTestCase):
         self.mock_session.url = "https://checkout.stripe.com/session123"
         self.mock_session.id = "session_123"
 
-        self.mock_payment_service_instance = Mock()
-        self.mock_payment_service_instance.create_payment_session.return_value = (
+        self.service_instance = Mock()
+        self.service_instance.create_payment_session.return_value = (
             self.mock_session
         )
 
     @patch("payments.services.create_stripe_session.StripePaymentService")
     def test_no_fine_on_return(self, mock_stripe_service):
-        mock_stripe_service.return_value = self.mock_payment_service_instance
+        mock_stripe_service.return_value = self.service_instance
 
         self.borrowing.actual_return_date = date.today()
         self.borrowing.save()
@@ -231,7 +231,7 @@ class BorrowingSignalsTest(NoMessagesTestCase):
 
     @patch("payments.services.create_stripe_session.StripePaymentService")
     def test_fine_was_created_successfully(self, mock_stripe_service):
-        mock_stripe_service.return_value = self.mock_payment_service_instance
+        mock_stripe_service.return_value = self.service_instance
 
         overdue_days = 5
         self.borrowing.actual_return_date = (
