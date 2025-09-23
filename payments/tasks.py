@@ -19,6 +19,7 @@ def send_payment_notification_task(payment_id: int):
     except Payment.DoesNotExist:
         print(f"Payment with id={payment_id} not found")
 
+
 @shared_task
 def check_expired_stripe_sessions():
     pending_payments = Payment.objects.filter(status=Payment.Status.PENDING)

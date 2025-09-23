@@ -112,10 +112,11 @@ class PaymentViewSet(
             }
         )
 
+
 class PaymentRenewView(generics.UpdateAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentRenewSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         if self.request.user.is_staff:
