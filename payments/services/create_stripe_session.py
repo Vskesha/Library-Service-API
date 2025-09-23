@@ -2,13 +2,14 @@ from abc import ABC, abstractmethod
 
 import stripe
 from django.conf import settings
+from django.urls import reverse
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class BasePaymentService(ABC):
     @abstractmethod
-    def create_payment_session(self, data: dict):
+    def create_payment_session(self, data: dict, request):
         pass
 
     @abstractmethod
@@ -21,7 +22,7 @@ class BasePaymentService(ABC):
 
 
 class StripePaymentService(BasePaymentService):
-    def create_payment_session(self, data: dict):
+    def create_payment_session(self, data: dict, request):
         try:
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -38,8 +39,12 @@ class StripePaymentService(BasePaymentService):
                     }
                 ],
                 mode="payment",
-                success_url="https://example.com/success",
-                cancel_url="https://example.com/cancel",
+                success_url=request.build_absolute_uri(
+                    reverse("payment-success")
+                ) + "?session_id={CHECKOUT_SESSION_ID}",
+                cancel_url = request.build_absolute_uri(
+                    reverse("payment-cancel")
+                ) + "?session_id={CHECKOUT_SESSION_ID}",
             )
             return session
 
