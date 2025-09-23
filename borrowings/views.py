@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, viewsets
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
 
 from borrowings.filters import BorrowingFilter
@@ -10,6 +11,7 @@ from borrowings.serializers import (
     BorrowingListSerializer,
     BorrowingSerializer,
 )
+from payments.models import Payment
 
 
 class BorrowingViewSet(
@@ -33,6 +35,15 @@ class BorrowingViewSet(
         return BorrowingSerializer
 
     def perform_create(self, serializer):
+        has_pending_payment = Payment.objects.filter(
+            borrowing__user=self.request.user,
+            status=Payment.Status.PENDING,
+        ).exists()
+        if has_pending_payment:
+            raise PermissionDenied(
+                "You have unpaid payments. "
+                "Please settle them before borrowing new books."
+            )
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
