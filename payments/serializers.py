@@ -54,12 +54,18 @@ class PaymentDetailSerializer(PaymentSerializer):
 class PaymentRenewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ["id", "session_url", "session_id"]
+        fields = (
+            "id",
+            "session_url",
+            "session_id",
+        )
 
     def validate(self, data):
         payment = self.instance
         if payment.status != Payment.Status.EXPIRED:
-            raise serializers.ValidationError("Only EXPIRED payments can be renewed.")
+            raise serializers.ValidationError(
+                "Only EXPIRED payments can be renewed."
+            )
         return data
 
     def update(self, instance, validated_data):
