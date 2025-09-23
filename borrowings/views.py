@@ -1,7 +1,11 @@
+from django.db import transaction
+from django.utils.timezone import now
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, status, viewsets
+from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from borrowings.filters import BorrowingFilter
 from borrowings.models import Borrowing
@@ -54,3 +58,33 @@ class BorrowingViewSet(
             queryset = queryset.filter(user=user)
 
         return queryset
+
+    @action(
+        methods=["POST"],
+        detail=True,
+        url_path="return",
+    )
+    def return_borrowing(self, request, pk=None):
+        borrowing = self.get_object()
+
+        if borrowing.actual_return_date:
+            return Response(
+                {"error": "This borrowing has already been returned."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if not request.user.is_staff and borrowing.user != request.user:
+            return Response(
+                {"error": "You can return only your own borrowings."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        with transaction.atomic():
+            borrowing.actual_return_date = now().date()
+            borrowing.book.inventory += 1
+            borrowing.book.save()
+            borrowing.save()
+        return Response(
+            BorrowingDetailSerializer(borrowing).data,
+            status=status.HTTP_200_OK,
+        )
