@@ -36,16 +36,16 @@ class BorrowingViewSetTests(NoMessagesTestCase):
             inventory=3,
             daily_fee=1,
         )
-
+        expected_return_date = timezone.now().date() + timedelta(days=5)
         self.borrowing1 = Borrowing.objects.create(
             user=self.user1,
             book=self.book,
-            expected_return_date=timezone.now().date(),
+            expected_return_date=expected_return_date,
         )
         self.borrowing2 = Borrowing.objects.create(
             user=self.user2,
             book=self.book,
-            expected_return_date=timezone.now().date(),
+            expected_return_date=expected_return_date,
         )
 
         self.client = APIClient()
@@ -56,12 +56,13 @@ class BorrowingViewSetTests(NoMessagesTestCase):
             password="pass123",
         )
         self.client.force_authenticate(user=user)
+        expected_return_date = timezone.now().date() + timedelta(days=5)
 
         self.client.post(
             reverse("borrowings:borrowing-list"),
             {
                 "book": self.book.id,
-                "expected_return_date": "2025-10-15",
+                "expected_return_date": expected_return_date,
             },
         )
 

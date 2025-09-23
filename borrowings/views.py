@@ -35,7 +35,7 @@ class BorrowingViewSet(
 
     def create(self, request, *args, **kwargs):
         with transaction.atomic():
-            super().create(request, *args, **kwargs)
+            return super().create(request, *args, **kwargs)
 
     def get_serializer_class(self):
         if self.action == "list":
