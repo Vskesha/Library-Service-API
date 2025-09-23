@@ -70,8 +70,8 @@ class BorrowingSignalsTest(TestCase):
 
         payment = payments.first()
         expected_amount = (
-                Decimal(self.book.daily_fee)
-                * Decimal(overdue_days)
-                * Decimal(os.environ.get("FINE_MULTIPLIER", "1.00"))
-            )
+            Decimal(self.book.daily_fee)
+            * Decimal(overdue_days)
+            * Decimal(os.environ.get("FINE_MULTIPLIER", "1.00"))
+        )
         self.assertEqual(payment.money_to_pay, expected_amount)
