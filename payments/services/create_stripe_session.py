@@ -42,11 +42,11 @@ class StripePaymentService(BasePaymentService):
                 ],
                 mode="payment",
                 success_url=f"{base_url}"
-                            f"{reverse('payments:payment-success')}"
-                            f"?session_id={{CHECKOUT_SESSION_ID}}",
+                f"{reverse('payments:payment-success')}"
+                f"?session_id={{CHECKOUT_SESSION_ID}}",
                 cancel_url=f"{base_url}"
-                           f"{reverse('payments:payment-cancel')}"
-                           f"?session_id={{CHECKOUT_SESSION_ID}}",
+                f"{reverse('payments:payment-cancel')}"
+                f"?session_id={{CHECKOUT_SESSION_ID}}",
             )
             return session
 
