@@ -1,9 +1,16 @@
+import os
+from datetime import date, timedelta
+from decimal import Decimal
+from unittest.mock import Mock, patch
+
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 from django.utils import timezone
 from rest_framework.test import APIClient
 
 from books.models import Book
 from borrowings.models import Borrowing
+from payments.models import Payment
 from payments.tests.tests_classes import NoMessagesTestCase
 
 User = get_user_model()
@@ -42,6 +49,50 @@ class BorrowingViewSetTests(NoMessagesTestCase):
         )
 
         self.client = APIClient()
+
+    def test_create_borrowing_success(self):
+        user = User.objects.create_user(
+            email="user@test.com",
+            password="pass123",
+        )
+        self.client.force_authenticate(user=user)
+
+        self.client.post(
+            reverse("borrowings:borrowing-list"),
+            {
+                "book": self.book.id,
+                "expected_return_date": "2025-10-15",
+            },
+        )
+
+        self.assertTrue(Borrowing.objects.filter(user=user).exists())
+
+    def test_borrowing_creation_fails_when_payment_fails(self):
+        with patch.object(
+            Payment.objects,
+            "create",
+            side_effect=Exception("Cannot create payment"),
+        ):
+
+            user = User.objects.create_user(
+                email="user@test.com",
+                password="pass123",
+            )
+            self.client.force_authenticate(user=user)
+
+            try:
+                self.client.post(
+                    reverse("borrowings:borrowing-list"),
+                    {
+                        "book": self.book.id,
+                        "expected_return_date": "2025-10-15",
+                    },
+                )
+            except Exception as e:
+                print(e)
+                pass
+
+            self.assertFalse(Borrowing.objects.filter(user=user).exists())
 
     def test_user_sees_only_their_borrowings(self):
         self.client.force_authenticate(user=self.user1)
@@ -135,3 +186,69 @@ class BorrowingViewSetTests(NoMessagesTestCase):
         )
         self.assertEqual(response.status_code, 400)
         self.assertIn("error", response.data)
+
+
+class BorrowingSignalsTest(NoMessagesTestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            email="user@example.com",
+            password="123vs456",
+        )
+        self.book = Book.objects.create(
+            title="Test Book",
+            author="Test Author",
+            cover="H",
+            inventory=10,
+            daily_fee=Decimal("2.00"),
+        )
+
+        self.borrowing = Borrowing.objects.create(
+            borrow_date=date.today(),
+            expected_return_date=date.today() + timedelta(days=5),
+            book=self.book,
+            user=self.user,
+        )
+
+        self.mock_session = Mock()
+        self.mock_session.url = "https://checkout.stripe.com/session123"
+        self.mock_session.id = "session_123"
+
+        self.mock_payment_service_instance = Mock()
+        self.mock_payment_service_instance.create_payment_session.return_value = (
+            self.mock_session
+        )
+
+    @patch("payments.services.create_stripe_session.StripePaymentService")
+    def test_no_fine_on_return(self, mock_stripe_service):
+        mock_stripe_service.return_value = self.mock_payment_service_instance
+
+        self.borrowing.actual_return_date = date.today()
+        self.borrowing.save()
+
+        self.assertEqual(
+            Payment.objects.filter(type=Payment.Type.FINE).count(), 0
+        )
+
+    @patch("payments.services.create_stripe_session.StripePaymentService")
+    def test_fine_was_created_successfully(self, mock_stripe_service):
+        mock_stripe_service.return_value = self.mock_payment_service_instance
+
+        overdue_days = 5
+        self.borrowing.actual_return_date = (
+            self.borrowing.expected_return_date + timedelta(days=overdue_days)
+        )
+        self.borrowing.save()
+
+        payments = Payment.objects.filter(
+            borrowing=self.borrowing,
+            type=Payment.Type.FINE,
+        )
+        self.assertEqual(len(payments), 1)
+
+        payment = payments.first()
+        expected_amount = (
+            Decimal(self.book.daily_fee)
+            * Decimal(overdue_days)
+            * Decimal(os.environ.get("FINE_MULTIPLIER", "1.00"))
+        )
+        self.assertEqual(payment.money_to_pay, expected_amount)

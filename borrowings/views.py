@@ -33,6 +33,10 @@ class BorrowingViewSet(
     filter_backends = [DjangoFilterBackend]
     filterset_class = BorrowingFilter
 
+    def create(self, request, *args, **kwargs):
+        with transaction.atomic():
+            super().create(request, *args, **kwargs)
+
     def get_serializer_class(self):
         if self.action == "list":
             return BorrowingListSerializer
