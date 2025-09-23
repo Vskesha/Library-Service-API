@@ -12,6 +12,7 @@ from books.models import Book
 from borrowings.models import Borrowing
 from payments.models import Payment
 from payments.services.create_stripe_session import StripePaymentService
+from payments.tests.tests_classes import NoMessagesTestCase
 
 PAYMENTS_URL = reverse("payments:payment-list")
 
@@ -74,7 +75,7 @@ def sample_payment(**params):
     return Payment.objects.create(**defaults)
 
 
-class AuthenticatedPaymentApiTest(TestCase):
+class AuthenticatedPaymentApiTest(NoMessagesTestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = sample_user()
@@ -96,7 +97,7 @@ class AuthenticatedPaymentApiTest(TestCase):
         self.assertEqual(res.data["id"], self.payment.id)
 
 
-class StaffPaymentApiTest(TestCase):
+class StaffPaymentApiTest(NoMessagesTestCase):
     def setUp(self):
         self.client = APIClient()
         self.staff_user = sample_user(
@@ -118,7 +119,7 @@ class StaffPaymentApiTest(TestCase):
         self.assertEqual(len(res.data), 2)
 
 
-class UnauthenticatedPaymentApiTest(TestCase):
+class UnauthenticatedPaymentApiTest(NoMessagesTestCase):
     def setUp(self):
         self.client = APIClient()
         self.payment = sample_payment()
@@ -133,7 +134,7 @@ class UnauthenticatedPaymentApiTest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class StripePaymentServiceTests(TestCase):
+class StripePaymentServiceTests(NoMessagesTestCase):
     def setUp(self):
         self.stripe_service = StripePaymentService()
 
