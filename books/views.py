@@ -13,6 +13,7 @@ class BookViewSet(viewsets.ModelViewSet):
     - Non-admin users can only perform GET (list/retrieve).
     - Admin users may POST, PUT/PATCH and DELETE.
     """
+
     serializer_class = BookSerializer
     queryset = Book.objects.all()
     authentication_classes = (JWTAuthentication,)

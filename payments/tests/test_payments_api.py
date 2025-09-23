@@ -75,6 +75,13 @@ def sample_payment(**params):
 
 
 class AuthenticatedPaymentApiTest(NoMessagesTestCase):
+    """
+    Tests payment API access for authenticated non-staff users.
+
+    - Verifies that users can list and retrieve only their own payments.
+    - Uses sample helpers to seed user, book, borrowing, and payment data.
+    """
+
     def setUp(self):
         self.client = APIClient()
         self.user = sample_user()
@@ -97,6 +104,12 @@ class AuthenticatedPaymentApiTest(NoMessagesTestCase):
 
 
 class StaffPaymentApiTest(NoMessagesTestCase):
+    """
+    Tests payment API access for staff users.
+
+    - Verifies that admin users can list all payments across all borrowings.
+    """
+
     def setUp(self):
         self.client = APIClient()
         self.staff_user = sample_user(
@@ -119,6 +132,12 @@ class StaffPaymentApiTest(NoMessagesTestCase):
 
 
 class UnauthenticatedPaymentApiTest(NoMessagesTestCase):
+    """
+    Tests payment API access for staff users.
+
+    - Verifies that unauthenticated users cannot access list nor details views.
+    """
+
     def setUp(self):
         self.client = APIClient()
         self.payment = sample_payment()
@@ -134,6 +153,12 @@ class UnauthenticatedPaymentApiTest(NoMessagesTestCase):
 
 
 class StripePaymentServiceTests(NoMessagesTestCase):
+    """
+    Tests core StripePaymentService methods.
+
+    - Verifies session creation, expiration, and payment status handling.
+    """
+
     def setUp(self):
         self.stripe_service = StripePaymentService()
 

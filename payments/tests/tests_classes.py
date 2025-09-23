@@ -14,6 +14,14 @@ from borrowings.signals import borrowing_created
     CELERY_BROKER_URL="memory://",
 )
 class NoMessagesTestCase(APITestCase):
+    """
+    Test case to avoid messages being sent while testing.
+
+    - Disconnects borrowing_created signal to prevent automatic task dispatch.
+    - Mocks Celery task methods and Telegram Bot messaging to avoid external calls.
+    - Used by tests that verify logic without triggering notifications or async behavior.
+    """
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

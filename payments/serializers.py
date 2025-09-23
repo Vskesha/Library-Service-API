@@ -6,6 +6,14 @@ from payments.services.create_stripe_session import StripePaymentService
 
 
 class PaymentSerializer(serializers.ModelSerializer):
+    """
+    BaseSerializer.
+
+    - Used by PaymentDetailSerializer.
+    - Contains all fields from the Payment model.
+    - For "borrowing" fields the BorrowingListSerializer is used to provide full borrowing details.
+    """
+
     borrowing = BorrowingListSerializer(
         read_only=True,
     )
@@ -24,6 +32,13 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 
 class PaymentListSerializer(serializers.ModelSerializer):
+    """
+    List serializer.
+
+    - Contains "id", "status", "type", "borrowing" and "money_to_pay", fields from the Payment model.
+    - For "borrowing" fields the SlugRelatedField is used to show only the borrowing ID.
+    """
+
     borrowing = BorrowingSerializer(read_only=True)
     user = serializers.CharField(
         read_only=True, source="borrowing.user.full_name"
@@ -47,8 +62,8 @@ class PaymentDetailSerializer(PaymentSerializer):
     """
     Extends PaymentSerializer for detailed views.
 
-    Inherits from PaymentSerializer and currently shares the same fields.
-    Defined separately to support future enhancements
+    - Inherits from PaymentSerializer and currently shares the same fields.
+    - Defined separately to support future enhancements.
     """
 
     pass
