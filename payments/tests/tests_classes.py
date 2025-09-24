@@ -1,7 +1,8 @@
 from unittest.mock import patch
 
 from django.db.models.signals import post_save
-from django.test import TestCase, override_settings
+from django.test import override_settings
+from rest_framework.test import APITestCase
 
 from borrowings.models import Borrowing
 from borrowings.signals import borrowing_created
@@ -12,7 +13,7 @@ from borrowings.signals import borrowing_created
     CELERY_TASK_EAGER_PROPAGATES=True,
     CELERY_BROKER_URL="memory://",
 )
-class NoMessagesTestCase(TestCase):
+class NoMessagesTestCase(APITestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

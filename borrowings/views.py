@@ -24,6 +24,10 @@ class BorrowingViewSet(
     mixins.CreateModelMixin,
     viewsets.GenericViewSet,
 ):
+    """
+    Endpoints for work with borrowings
+    """
+
     queryset = (
         Borrowing.objects.all()
         .select_related("book", "user")
@@ -33,6 +37,11 @@ class BorrowingViewSet(
     filter_backends = [DjangoFilterBackend]
     filterset_class = BorrowingFilter
 
+    def create(self, request, *args, **kwargs):
+        """Endpoint for creating borrowing"""
+        with transaction.atomic():
+            return super().create(request, *args, **kwargs)
+
     def get_serializer_class(self):
         if self.action == "list":
             return BorrowingListSerializer
@@ -40,6 +49,8 @@ class BorrowingViewSet(
             return BorrowingDetailSerializer
         if self.action == "create":
             return BorrowingCreateSerializer
+        if self.action == "return_borrowing":
+            return None
         return BorrowingSerializer
 
     def perform_create(self, serializer):

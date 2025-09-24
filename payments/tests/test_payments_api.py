@@ -2,7 +2,6 @@ from datetime import date
 from unittest.mock import MagicMock, patch
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -38,7 +37,7 @@ def sample_book(**params):
     defaults = {
         "title": "Lord of the Rings",
         "author": "J. R. R. Tolkien",
-        "cover": "H",
+        "cover": "Hard",
         "inventory": 100,
         "daily_fee": 0.10,
     }
@@ -88,7 +87,7 @@ class AuthenticatedPaymentApiTest(NoMessagesTestCase):
         res = self.client.get(PAYMENTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data[0]["borrowing"], self.borrowing.id)
+        self.assertEqual(res.data[0]["borrowing"]["id"], self.borrowing.id)
 
     def test_retrieve_users_payment(self):
         url = payment_detail_url(self.payment.id)

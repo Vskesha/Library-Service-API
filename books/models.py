@@ -4,19 +4,13 @@ from django.db.models.constraints import UniqueConstraint
 
 class Book(models.Model):
     class Cover(models.TextChoices):
-        HARD = (
-            "H",
-            "Hard",
-        )
-        SOFT = (
-            "S",
-            "Soft",
-        )
+        HARD = ("Hard", "Hard")
+        SOFT = ("Soft", "Soft")
 
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     cover = models.CharField(
-        max_length=1,
+        max_length=5,
         choices=Cover.choices,
         default=Cover.SOFT,
     )
@@ -30,6 +24,7 @@ class Book(models.Model):
                 name="unique_book",
             )
         ]
+        ordering = ("title",)
 
     def __str__(self):
         return f"{self.title} - {self.author} ({self.inventory} available)"
