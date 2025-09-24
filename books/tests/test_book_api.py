@@ -27,6 +27,12 @@ def sample_book(**params):
 
 
 class AdminApiTest(TestCase):
+    """
+    Tests payment API access for authenticated staff users.
+
+    - Verifies that admin users can perform all CRUD operations.
+    """
+
     def setUp(self):
         self.client = APIClient()
         self.user = get_user_model()
@@ -102,6 +108,12 @@ class AdminApiTest(TestCase):
 
 
 class UnauthenticatedApiTest(TestCase):
+    """
+    Tests payment API access for unauthenticated users.
+
+    - Verifies that unauthenticated users can access only list.
+    """
+
     def setUp(self):
         self.client = APIClient()
         self.book = sample_book()
