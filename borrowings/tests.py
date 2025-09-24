@@ -32,7 +32,7 @@ class BorrowingViewSetTests(NoMessagesTestCase):
         self.book = Book.objects.create(
             title="Book1",
             author="Author1",
-            cover="H",
+            cover="Hard",
             inventory=3,
             daily_fee=1,
         )
@@ -89,8 +89,7 @@ class BorrowingViewSetTests(NoMessagesTestCase):
                         "expected_return_date": "2025-10-15",
                     },
                 )
-            except Exception as e:
-                print(e)
+            except Exception:
                 pass
 
             self.assertFalse(Borrowing.objects.filter(user=user).exists())
@@ -198,7 +197,7 @@ class BorrowingSignalsTest(NoMessagesTestCase):
         self.book = Book.objects.create(
             title="Test Book",
             author="Test Author",
-            cover="H",
+            cover="Hard",
             inventory=10,
             daily_fee=Decimal("2.00"),
         )

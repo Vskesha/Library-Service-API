@@ -17,7 +17,7 @@ def sample_book(**params):
     defaults = {
         "title": "Lord of the Rings",
         "author": "J. R. R. Tolkien",
-        "cover": "H",
+        "cover": "Hard",
         "inventory": 100,
         "daily_fee": 0.10,
     }
@@ -43,7 +43,7 @@ class AdminApiTest(TestCase):
             data={
                 "title": "The Hobbit, or There and Back Again",
                 "author": "J. R. R. Tolkien",
-                "cover": "H",
+                "cover": "Hard",
                 "inventory": 100,
                 "daily_fee": 0.10,
             },
@@ -62,7 +62,7 @@ class AdminApiTest(TestCase):
             data={
                 "title": "The Hobbit",
                 "author": "J. R. R. Tolkien",
-                "cover": "S",
+                "cover": "Soft",
                 "inventory": 50,
                 "daily_fee": 0.20,
             },
@@ -73,7 +73,7 @@ class AdminApiTest(TestCase):
             data={
                 "title": "The Hobbit",
                 "author": "J. R. R. Tolkien",
-                "cover": "S",
+                "cover": "Soft",
                 "inventory": 50,
                 "daily_fee": 0.20,
             },
@@ -90,7 +90,7 @@ class AdminApiTest(TestCase):
         payload = {
             "title": "The Hobbit, or There and Back Again",
             "author": "J. R. R. Tolkien",
-            "cover": "H",
+            "cover": "Hard",
             "inventory": 100,
             "daily_fee": 0.10,
         }
@@ -114,7 +114,7 @@ class UnauthenticatedApiTest(TestCase):
         payload = {
             "title": "The Hobbit, or There and Back Again",
             "author": "J. R. R. Tolkien",
-            "cover": "H",
+            "cover": "Hard",
             "inventory": 100,
             "daily_fee": 0.10,
         }

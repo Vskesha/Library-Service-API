@@ -13,6 +13,7 @@ from borrowings.serializers import (
     BorrowingCreateSerializer,
     BorrowingDetailSerializer,
     BorrowingListSerializer,
+    BorrowingReturnSerializer,
     BorrowingSerializer,
 )
 from payments.models import Payment
@@ -44,6 +45,8 @@ class BorrowingViewSet(
             return BorrowingDetailSerializer
         if self.action == "create":
             return BorrowingCreateSerializer
+        if self.action == "return":
+            return BorrowingReturnSerializer
         return BorrowingSerializer
 
     def perform_create(self, serializer):

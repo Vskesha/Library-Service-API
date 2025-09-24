@@ -24,7 +24,10 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 
 class PaymentListSerializer(serializers.ModelSerializer):
-    borrowing = serializers.SlugRelatedField(read_only=True, slug_field="id")
+    borrowing = BorrowingSerializer(read_only=True)
+    user = serializers.CharField(
+        read_only=True, source="borrowing.user.full_name"
+    )
 
     class Meta:
         model = Payment
@@ -33,7 +36,10 @@ class PaymentListSerializer(serializers.ModelSerializer):
             "status",
             "type",
             "borrowing",
+            "session_url",
+            "session_id",
             "money_to_pay",
+            "user",
         )
 
 
@@ -49,6 +55,12 @@ class PaymentDetailSerializer(PaymentSerializer):
     borrowing = BorrowingSerializer(
         read_only=True,
     )
+    user = serializers.CharField(
+        read_only=True, source="borrowing.user.full_name"
+    )
+
+    class Meta(PaymentSerializer.Meta):
+        fields = PaymentSerializer.Meta.fields + ("user",)
 
 
 class PaymentRenewSerializer(serializers.ModelSerializer):

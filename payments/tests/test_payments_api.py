@@ -37,7 +37,7 @@ def sample_book(**params):
     defaults = {
         "title": "Lord of the Rings",
         "author": "J. R. R. Tolkien",
-        "cover": "H",
+        "cover": "Hard",
         "inventory": 100,
         "daily_fee": 0.10,
     }

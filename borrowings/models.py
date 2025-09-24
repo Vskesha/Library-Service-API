@@ -20,6 +20,9 @@ class Borrowing(models.Model):
         related_name="borrowings",
     )
 
+    class Meta:
+        ordering = ("borrow_date",)
+
     def __str__(self):
         return (
             f"From: {self.borrow_date} "
