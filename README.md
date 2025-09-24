@@ -52,11 +52,16 @@ Use these tokens in headers:
 
 Swagger (link will be inserted later)
 
-Documentation is auto-generated via drf-yasg. Custom actions include inline descriptions.
+Documentation is auto-generated via drf-spectacular. Custom actions include inline descriptions.
+
+## DB Scheme
+
+![db_scheme](demo/db_scheme.png)
 
 ## 🧪 Testing & Coverage
 
-will add when completed
+![coverage](demo/coverage1.png)
+![coverage](demo/coverage2.png)
 
 ## 🛡 Library Rules
 

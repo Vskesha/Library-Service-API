@@ -21,7 +21,7 @@ class Borrowing(models.Model):
     )
 
     class Meta:
-        ordering = ("borrow_date",)
+        ordering = ("-borrow_date", "-id")
 
     def __str__(self):
         return (

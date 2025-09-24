@@ -65,29 +65,6 @@ class BorrowingDetailSerializer(BorrowingListSerializer):
     user = UserSerializer()
 
 
-class BorrowingReturnSerializer(BorrowingDetailSerializer):
-
-    class Meta:
-        model = Borrowing
-        fields = (
-            "id",
-            "borrow_date",
-            "expected_return_date",
-            "actual_return_date",
-            "book",
-            "user",
-            "payments",
-        )
-        read_only_fields = (
-            "id",
-            "borrow_date",
-            "actual_return_date",
-            "book",
-            "user",
-            "payments",
-        )
-
-
 class BorrowingCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Borrowing

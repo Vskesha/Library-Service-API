@@ -13,7 +13,6 @@ from borrowings.serializers import (
     BorrowingCreateSerializer,
     BorrowingDetailSerializer,
     BorrowingListSerializer,
-    BorrowingReturnSerializer,
     BorrowingSerializer,
 )
 from payments.models import Payment
@@ -28,6 +27,7 @@ class BorrowingViewSet(
     """
     Endpoints for work with borrowings
     """
+
     queryset = (
         Borrowing.objects.all()
         .select_related("book", "user")
