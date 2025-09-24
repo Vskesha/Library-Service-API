@@ -87,7 +87,7 @@ class AuthenticatedPaymentApiTest(NoMessagesTestCase):
         res = self.client.get(PAYMENTS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data[0]["borrowing"], self.borrowing.id)
+        self.assertEqual(res.data[0]["borrowing"]["id"], self.borrowing.id)
 
     def test_retrieve_users_payment(self):
         url = payment_detail_url(self.payment.id)
