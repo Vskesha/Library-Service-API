@@ -11,7 +11,8 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     - Used by PaymentDetailSerializer.
     - Contains all fields from the Payment model.
-    - For "borrowing" fields the BorrowingListSerializer is used to provide full borrowing details.
+    - For "borrowing" fields the BorrowingListSerializer is used to provide
+    full borrowing details.
     """
 
     borrowing = BorrowingListSerializer(
@@ -35,8 +36,10 @@ class PaymentListSerializer(serializers.ModelSerializer):
     """
     List serializer.
 
-    - Contains "id", "status", "type", "borrowing" and "money_to_pay", fields from the Payment model.
-    - For "borrowing" fields the SlugRelatedField is used to show only the borrowing ID.
+    - Contains "id", "status", "type", "borrowing" and "money_to_pay",
+    fields from the Payment model.
+    - For "borrowing" fields the SlugRelatedField is used to
+    show only the borrowing ID.
     """
 
     borrowing = BorrowingSerializer(read_only=True)
