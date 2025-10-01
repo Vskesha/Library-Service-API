@@ -28,11 +28,9 @@ class BorrowingViewSet(
     Endpoints for work with borrowings
     """
 
-    queryset = (
-        Borrowing.objects.all()
-        .select_related("book", "user")
-        .prefetch_related("payments")
-    )
+    queryset = Borrowing.objects.select_related(
+        "book", "user"
+    ).prefetch_related("payments")
     permission_classes = (IsAuthenticated,)
     filter_backends = [DjangoFilterBackend]
     filterset_class = BorrowingFilter
