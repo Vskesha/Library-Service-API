@@ -29,7 +29,7 @@ class BorrowingViewSet(
     """
 
     queryset = (
-        Borrowing.objects.all()
+        Borrowing.objects
         .select_related("book", "user")
         .prefetch_related("payments")
     )
