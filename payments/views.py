@@ -119,6 +119,7 @@ class PaymentRenewView(generics.UpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
+        base_queryset = super().get_queryset()
         if self.request.user.is_staff:
-            return Payment.objects.all()
-        return Payment.objects.filter(borrowing__user=self.request.user)
+            return base_queryset
+        return base_queryset.filter(borrowing__user=self.request.user)

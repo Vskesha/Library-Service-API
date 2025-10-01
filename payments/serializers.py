@@ -69,7 +69,6 @@ class PaymentDetailSerializer(PaymentSerializer):
     - Defined separately to support future enhancements.
     """
 
-    pass
     borrowing = BorrowingSerializer(
         read_only=True,
     )
