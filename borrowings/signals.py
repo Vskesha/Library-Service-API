@@ -50,40 +50,44 @@ def create_fine_payment_on_overdue(sender, instance, created, **kwargs):
     Creates a Fine Payment when book is returned after expected return date
     """
 
-    if not created and instance.actual_return_date is not None:
-        fine_exists = Payment.objects.filter(
-            borrowing=instance,
-            type=Payment.Type.FINE,
-        ).exists()
+    if created or instance.actual_return_date is None:
+        return
 
-        if fine_exists:
-            return
+    fine_exists = Payment.objects.filter(
+        borrowing=instance,
+        type=Payment.Type.FINE,
+    ).exists()
 
-        overdue_days = (
-            instance.actual_return_date - instance.expected_return_date
-        ).days
-        if overdue_days > 0:
-            book = instance.book
-            fine_amount = (
-                Decimal(book.daily_fee)
-                * Decimal(overdue_days)
-                * Decimal(os.environ.get("FINE_MULTIPLIER", "1.00"))
-            )
+    if fine_exists:
+        return
 
-            data = {
-                "product_data": {
-                    "name": f"Overdue borrowing {book.title} "
-                    f"({book.author} for {overdue_days} day(s)"
-                },
-                "unit_amount": fine_amount,
-            }
-            payment_service = StripePaymentService()
-            session = payment_service.create_payment_session(data)
+    overdue_days = (
+        instance.actual_return_date - instance.expected_return_date
+    ).days
+    if overdue_days <= 0:
+        return
 
-            Payment.objects.create(
-                borrowing=instance,
-                type=Payment.Type.FINE,
-                money_to_pay=fine_amount,
-                session_url=session.url,
-                session_id=session.id,
-            )
+    book = instance.book
+    fine_amount = (
+        Decimal(book.daily_fee)
+        * Decimal(overdue_days)
+        * Decimal(os.environ.get("FINE_MULTIPLIER", "1.00"))
+    )
+
+    data = {
+        "product_data": {
+            "name": f"Overdue borrowing {book.title} "
+            f"({book.author} for {overdue_days} day(s)"
+        },
+        "unit_amount": fine_amount,
+    }
+    payment_service = StripePaymentService()
+    session = payment_service.create_payment_session(data)
+
+    Payment.objects.create(
+        borrowing=instance,
+        type=Payment.Type.FINE,
+        money_to_pay=fine_amount,
+        session_url=session.url,
+        session_id=session.id,
+    )

@@ -1,7 +1,9 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+
+from base.singletons import SingletonABCMeta
 
 
-class BaseBotService(ABC):
+class BaseBotService(metaclass=SingletonABCMeta):
     @abstractmethod
     def send_notification(
         self, chat_id: int | str, text: str, **kwargs
