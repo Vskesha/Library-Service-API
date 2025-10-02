@@ -1,13 +1,15 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 import stripe
 from django.conf import settings
 from django.urls import reverse
 
+from base.singletons import SingletonABCMeta
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class BasePaymentService(ABC):
+class BasePaymentService(metaclass=SingletonABCMeta):
     @abstractmethod
     def create_payment_session(self, data: dict):
         pass
