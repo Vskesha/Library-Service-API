@@ -1,10 +1,9 @@
 from django.db import transaction
 from django.db.models import F
 from django.utils import timezone
-from rest_framework import generics, mixins, permissions, status, viewsets
+from rest_framework import generics, mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -26,7 +25,6 @@ class PaymentViewSet(
     viewsets.GenericViewSet,
 ):
     queryset = Payment.objects.select_related("borrowing")
-    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -116,7 +114,6 @@ class PaymentViewSet(
 class PaymentRenewView(generics.UpdateAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentRenewSerializer
-    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         if self.request.user.is_staff:
