@@ -26,7 +26,7 @@ class BorrowingNotificationService(TelegramBotService):
 
     def check_overdue_borrowings(self) -> None:
         overdue_borrowings = Borrowing.objects.filter(
-            actual_return_date__isnull=True,
+            actual_return_date=None,
             expected_return_date__lt=timezone.localdate(),
         ).select_related("book", "user")
 
