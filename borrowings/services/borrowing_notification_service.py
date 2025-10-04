@@ -35,9 +35,7 @@ class BorrowingNotificationService(TelegramBotService):
         if overdue_borrowings.exists():
             borrowings_by_user = {}
             for borrowing in overdue_borrowings:
-                borrowings_by_user.setdefault(
-                    borrowing.user.full_name, []
-                ).append(borrowing)
+                borrowings_by_user[borrowing.user.full_name] = [borrowing]
 
             text_parts = []
             for user, borrowings in borrowings_by_user.items():
