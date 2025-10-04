@@ -30,30 +30,29 @@ class BorrowingNotificationService(TelegramBotService):
             expected_return_date__lt=timezone.localdate(),
         ).select_related("book", "user")
 
-        if overdue_borrowings.exists():
-            borrowings_by_user = {}
-
-            for borrowing in overdue_borrowings:
-                borrowings_by_user.setdefault(
-                    borrowing.user.full_name, []
-                ).append(borrowing)
-
-            text_parts = []
-            for user, borrowings in borrowings_by_user.items():
-                count_borrowings = len(borrowings)
-                user_text = (
-                    f"{user} has {count_borrowings} "
-                    f"borrowing{'s' if count_borrowings > 1 else ''}:\n"
-                )
-                borrowings_text = "\n".join(
-                    f"📕 {borrowing.book.title} "
-                    f"(Return date: {borrowing.expected_return_date})"
-                    for borrowing in borrowings
-                )
-                text_parts.append(user_text + borrowings_text)
-
-            text = "Borrowings Info 📚\n\n" + "\n\n".join(text_parts)
-        else:
+        if not overdue_borrowings.exists():
             text = "No borrowings overdue today! ✅"
+            self.send_notification(settings.TELEGRAM_ADMIN_CHAT_ID, text=text)
+            return
 
+        borrowings_by_user = {}
+
+        for borrowing in overdue_borrowings:
+            borrowings_by_user[borrowing.user.full_name] = [borrowing]
+
+        text_parts = []
+        for user, borrowings in borrowings_by_user.items():
+            count_borrowings = len(borrowings)
+            user_text = (
+                f"{user} has {count_borrowings} "
+                f"borrowing{'s' if count_borrowings > 1 else ''}:\n"
+            )
+            borrowings_text = "\n".join(
+                f"📕 {borrowing.book.title} "
+                f"(Return date: {borrowing.expected_return_date})"
+                for borrowing in borrowings
+            )
+            text_parts.append(user_text + borrowings_text)
+
+        text = "Borrowings Info 📚\n\n" + "\n\n".join(text_parts)
         self.send_notification(settings.TELEGRAM_ADMIN_CHAT_ID, text=text)
