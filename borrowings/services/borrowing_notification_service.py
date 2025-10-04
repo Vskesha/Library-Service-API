@@ -30,9 +30,10 @@ class BorrowingNotificationService(TelegramBotService):
             expected_return_date__lt=timezone.localdate(),
         ).select_related("book", "user")
 
+        text = "No borrowings overdue today! ✅"
+
         if overdue_borrowings.exists():
             borrowings_by_user = {}
-
             for borrowing in overdue_borrowings:
                 borrowings_by_user.setdefault(
                     borrowing.user.full_name, []
@@ -53,7 +54,5 @@ class BorrowingNotificationService(TelegramBotService):
                 text_parts.append(user_text + borrowings_text)
 
             text = "Borrowings Info 📚\n\n" + "\n\n".join(text_parts)
-        else:
-            text = "No borrowings overdue today! ✅"
 
         self.send_notification(settings.TELEGRAM_ADMIN_CHAT_ID, text=text)
